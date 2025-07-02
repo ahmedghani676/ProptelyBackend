@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id        Int     @id @default(autoincrement())
+  name      String
+  location  String
+  units     Unit[]
+}
+
+model Landlord {
+  id       Int     @id @default(autoincrement())
+  name     String
+  contact  String
+  units    Unit[]
+}
+
+model Unit {
+  id          Int       @id @default(autoincrement())
+  unitNo      String
+  status      String
+  propertyId  Int
+  landlordId  Int
+  property    Property   @relation(fields: [propertyId], references: [id] , onDelete: Cascade)
+  landlord    Landlord   @relation(fields: [landlordId], references: [id] , onDelete: Cascade)
+  lease       Lease?
+}
+
+model Tenant {
+  id       Int     @id @default(autoincrement())
+  name     String
+  contact  String
+  leases   Lease[]
+}
+
+model Lease {
+  id        Int      @id @default(autoincrement())
+  unitId    Int      @unique
+  tenantId  Int
+  rent      Int
+  deposit   Int
+  startDate DateTime
+  endDate   DateTime
+  unit      Unit     @relation(fields: [unitId], references: [id] , onDelete: Cascade)
+  tenant    Tenant   @relation(fields: [tenantId], references: [id] , onDelete: Cascade)
+}
