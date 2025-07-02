@@ -1,29 +1,56 @@
-Proptely Backend
-A Node.js + Express + Prisma backend for the Proptely mini‑app.
+# Proptely Backend
 
-Features
-REST API for Property, Tenant, Unit, Landlord, Lease
+A **Node.js** + **Express** + **Prisma** backend for the Proptely property‑management mini‑app.
 
-SQLite/PostgreSQL support via Prisma
+---
 
-Seed script for sample data
+## 🚀 Features
 
-Setup
-Clone this repo
+- **REST API** for:
+  - Property
+  - Tenant
+  - Unit
+  - Landlord
+  - Lease
+- **Database support** via Prisma:
+  - SQLite (development)
+  - PostgreSQL (production)
+- **Seed script** to populate the database with sample data
 
-git clone git@github.com:USERNAME/proptely-backend.git
-cd proptely-backend
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone this repository**  
+
+   git clone git@github.com:USERNAME/proptely-backend.git
+   cd proptely-backend
 Install dependencies
+
+
 npm install
-Copy .env.example → .env and fill in your database URL
+Configure environment variables
+Copy the example file and fill in your database URL:
+
 
 cp .env.example .env
-Run migrations & seed data
+# Then edit `.env` and set:
+# DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+Run database migrations
 
-npx prisma migrate dev
+
+npx prisma migrate dev --name init
+Seed the database
+
+
 node prisma/seed.js
 Start the server
 
+In development (with nodemon):
+
+
 npm run dev
-# or
-node index.js
+In production:
+
+
+npm start
